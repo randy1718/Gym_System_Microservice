@@ -1,0 +1,27 @@
+{
+  "trainers": [
+    { "firstName": "John", "lastName": "Doe", "specializationName": "Cardio" },
+    { "firstName": "Ana", "lastName": "Lopez", "specializationName": "Strength" }
+  ],
+  "trainees": [
+    { "firstName": "Mary", "lastName": "Diaz", "address": "Street 123" },
+    { "firstName": "Alex", "lastName": "Perez", "address": "Street 917" }
+  ],
+   "trainings": [
+    { "traineeUsername": "Mary.Diaz", "trainerUsername": "John.Doe", "trainingName": "Cardio_John", "trainingType": "Cardio", "date":"2025-11-22 10:00:00", "duration": "60"}
+  ],
+  "trainingTypes": [
+    { "name": "Cardio" },
+    { "name": "Strength" },
+    { "name": "Flexibility" },
+    { "name": "Balance" },
+    { "name": "Endurance" },
+    { "name": "HIIT" },
+    { "name": "Yoga" },
+    { "name": "Pilates" },
+    { "name": "CrossFit" },
+    { "name": "Functional Training" },
+    { "name": "Weight Training" },
+    { "name": "Circuit Training" }
+  ]
+}
