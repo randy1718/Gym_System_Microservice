@@ -1,12 +1,13 @@
 package com.gym.system.workload.service;
 
-import com.gym.system.workload.dto.CalculateTrainerWorkloadRequest;
+import com.gym.system.shared.dto.CalculateTrainerWorkloadRequest;
 import com.gym.system.workload.model.Trainer;
+import com.gym.system.workload.service.strategy.WorkloadStrategy;
+import com.gym.system.workload.service.strategy.WorkloadStrategyFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +16,20 @@ public class TrainerService {
 
     private static final Logger logger = LoggerFactory.getLogger(TrainerService.class);
     private final Map<String, Trainer> trainers = new HashMap<>();
+    private final WorkloadStrategyFactory strategyFactory;
+
+    public TrainerService(WorkloadStrategyFactory strategyFactory) {
+        this.strategyFactory = strategyFactory;
+    }
 
     public void calculateWorkload(CalculateTrainerWorkloadRequest request) {
+        Trainer trainer = getOrCreateTrainer(request);
+        WorkloadStrategy strategy = strategyFactory.getStrategy(request.getActionType());
+        strategy.execute(trainer, request);
+    }
 
-        Trainer trainer = trainers.computeIfAbsent(
+    private Trainer getOrCreateTrainer(CalculateTrainerWorkloadRequest request) {
+        return trainers.computeIfAbsent(
                 request.getTrainerUsername(),
                 username -> {
                     Trainer t = new Trainer();
@@ -29,36 +40,6 @@ public class TrainerService {
                     t.setYears(new HashMap<>());
                     return t;
                 }
-        );
-
-        int duration = request.getTrainingDuration();
-        LocalDate date = request.getTrainingDate();
-        String actionType = request.getActionType();
-
-        int year = date.getYear();
-        int month = date.getMonthValue();
-
-        Map<Integer, Map<Integer, Integer>> years = trainer.getYears();
-
-        Map<Integer, Integer> months =
-                years.computeIfAbsent(year, y -> new HashMap<>());
-
-        if (actionType.equals("ADD")) {
-            months.merge(month, duration, Integer::sum);
-
-        } else if (actionType.equals("DELETE")) {
-            months.merge(month, -duration, Integer::sum);
-
-            if (months.get(month) <= 0) {
-                months.remove(month);
-            }
-        }
-
-        logger.info("Trainer {} updated: year={}, month={}, hours={}",
-                trainer.getUsername(),
-                year,
-                month,
-                months.getOrDefault(month, 0)
         );
     }
 

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.gym.system.dto.*;
+import com.gym.system.shared.dto.CalculateTrainerWorkloadRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.slf4j.Logger;
@@ -34,6 +35,7 @@ public class TrainingService {
     private final TraineeService traineeService;
     private final AuthService AuthService;
     private final WorkloadClient workloadClient;
+    private final WorkloadProducer workloadProducer;
 
     private static final Logger logger = LoggerFactory.getLogger(TrainingService.class);
 
@@ -45,7 +47,8 @@ public class TrainingService {
                            TrainerService trainerService,
                            TraineeService traineeService,
                            AuthService AuthService,
-                           WorkloadClient workloadClient) {
+                           WorkloadClient workloadClient,
+                           WorkloadProducer workloadProducer) {
         this.trainingDAO = trainingDAO;
         this.trainerDAO = trainerDAO;
         this.traineeDAO = traineeDAO;
@@ -54,6 +57,7 @@ public class TrainingService {
         this.traineeService = traineeService;
         this.AuthService = AuthService;
         this.workloadClient = workloadClient;
+        this.workloadProducer = workloadProducer;
     }
 
 
@@ -128,7 +132,8 @@ public class TrainingService {
         workloadRequest.setTrainingDuration(training.getDuration());
         workloadRequest.setActionType("ADD");
 
-        workloadClient.sendWorkload(workloadRequest, token);
+        //workloadClient.sendWorkload(workloadRequest, token);
+        workloadProducer.sendWorkload((workloadRequest));
 
         return true;
     }
@@ -150,7 +155,8 @@ public class TrainingService {
         workloadRequest.setTrainingDuration(training.getDuration());
         workloadRequest.setActionType("DELETE");
 
-        workloadClient.sendWorkload(workloadRequest, token);
+        //workloadClient.sendWorkload(workloadRequest, token);
+        workloadProducer.sendWorkload((workloadRequest));
 
         trainingDAO.delete(training.getId());
 

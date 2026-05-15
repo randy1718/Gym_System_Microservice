@@ -1,12 +1,11 @@
 package com.gym.system.workload.controller;
 
-import com.gym.system.workload.dto.CalculateTrainerWorkloadRequest;
+import com.gym.system.shared.dto.CalculateTrainerWorkloadRequest;
 import com.gym.system.workload.service.TrainerService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

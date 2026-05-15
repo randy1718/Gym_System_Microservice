@@ -1,9 +1,12 @@
-package com.gym.system.dto;
+package com.gym.system.shared.dto;
 
-import java.time.LocalDate;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class CalculateTrainerWorkloadRequest {
+public class CalculateTrainerWorkloadRequest implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
     private String trainerUsername;
     private String firstName;
     private String lastName;

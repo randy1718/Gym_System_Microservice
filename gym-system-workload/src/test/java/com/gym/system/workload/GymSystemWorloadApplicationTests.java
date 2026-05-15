@@ -1,23 +1,30 @@
 package com.gym.system.workload;
 
 import static org.junit.jupiter.api.Assertions.*;
-import com.gym.system.workload.dto.CalculateTrainerWorkloadRequest;
+import com.gym.system.shared.dto.CalculateTrainerWorkloadRequest;
 import com.gym.system.workload.service.TrainerService;
+import com.gym.system.workload.service.strategy.AddWorkloadStrategy;
+import com.gym.system.workload.service.strategy.DeleteWorkloadStrategy;
+import com.gym.system.workload.service.strategy.WorkloadStrategyFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.Map;
 
-@SpringBootTest
 class GymSystemWorloadApplicationTests {
 
 	private TrainerService trainerService;
 
-	@BeforeEach
+    @BeforeEach
 	void setUp() {
-		trainerService = new TrainerService();
+		WorkloadStrategyFactory strategyFactory =
+				new WorkloadStrategyFactory(
+						new AddWorkloadStrategy(),
+						new DeleteWorkloadStrategy()
+				);
+
+		trainerService = new TrainerService(strategyFactory);
 	}
 
 	@Test

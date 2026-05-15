@@ -71,7 +71,7 @@ Thumbs.db
 # Environment / Secrets
 # =========================
 .env
-application.properties
+# application.properties
 application.yml
 
 # =========================

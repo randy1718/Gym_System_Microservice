@@ -1,6 +1,6 @@
 package com.gym.system.service;
 
-import com.gym.system.dto.CalculateTrainerWorkloadRequest;
+import com.gym.system.shared.dto.CalculateTrainerWorkloadRequest;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
