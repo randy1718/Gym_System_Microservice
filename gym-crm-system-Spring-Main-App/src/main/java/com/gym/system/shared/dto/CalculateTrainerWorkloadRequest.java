@@ -1,11 +1,8 @@
 package com.gym.system.shared.dto;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
-public class CalculateTrainerWorkloadRequest implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class CalculateTrainerWorkloadRequest {
 
     private String trainerUsername;
     private String firstName;
