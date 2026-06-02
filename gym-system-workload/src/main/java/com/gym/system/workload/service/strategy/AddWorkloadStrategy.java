@@ -1,9 +1,8 @@
 package com.gym.system.workload.service.strategy;
 
 import com.gym.system.shared.dto.CalculateTrainerWorkloadRequest;
-import com.gym.system.workload.model.Trainer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.gym.system.workload.logging.TrainerLog;
+import com.gym.system.workload.model.TrainerTrainingSummary;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -11,9 +10,8 @@ import java.util.Map;
 
 @Component
 public class AddWorkloadStrategy implements WorkloadStrategy{
-    private static final Logger logger = LoggerFactory.getLogger(AddWorkloadStrategy.class);
 
-    public void execute(Trainer trainer, CalculateTrainerWorkloadRequest request) {
+    public void execute(TrainerTrainingSummary trainer, CalculateTrainerWorkloadRequest request) {
         int duration = request.getTrainingDuration();
         int year = request.getTrainingDate().getYear();
         int month = request.getTrainingDate().getMonthValue();
@@ -22,12 +20,11 @@ public class AddWorkloadStrategy implements WorkloadStrategy{
         Map<Integer, Integer> months = years.computeIfAbsent(year, y -> new HashMap<>());
         months.merge(month, duration, Integer::sum);
 
-        logger.info(
-                "Trainer {} updated (Added training hours): year={}, month={}, hours={}",
-                trainer.getUsername(),
+        TrainerLog.trainerWorkloadUpdated(
+                trainer,
                 year,
                 month,
-                months.getOrDefault(month, 0)
-        );
+                months.getOrDefault(month, 0),
+                "ADD");
     }
 }

@@ -1,49 +1,48 @@
 package com.gym.system.workload.service;
 
 import com.gym.system.shared.dto.CalculateTrainerWorkloadRequest;
-import com.gym.system.workload.model.Trainer;
+import com.gym.system.workload.model.TrainerTrainingSummary;
+import com.gym.system.workload.repository.TrainerTrainingSummaryRepository;
 import com.gym.system.workload.service.strategy.WorkloadStrategy;
 import com.gym.system.workload.service.strategy.WorkloadStrategyFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.gym.system.workload.logging.TrainerLog;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class TrainerService {
-
-    private static final Logger logger = LoggerFactory.getLogger(TrainerService.class);
-    private final Map<String, Trainer> trainers = new HashMap<>();
     private final WorkloadStrategyFactory strategyFactory;
+    private final TrainerTrainingSummaryRepository repository;
 
-    public TrainerService(WorkloadStrategyFactory strategyFactory) {
+    public TrainerService(WorkloadStrategyFactory strategyFactory,  TrainerTrainingSummaryRepository repository) {
         this.strategyFactory = strategyFactory;
+        this.repository = repository;
     }
 
     public void calculateWorkload(CalculateTrainerWorkloadRequest request) {
-        Trainer trainer = getOrCreateTrainer(request);
+        TrainerTrainingSummary trainer = getOrCreateTrainer(request);
         WorkloadStrategy strategy = strategyFactory.getStrategy(request.getActionType());
         strategy.execute(trainer, request);
+        TrainerTrainingSummary saved = repository.save(trainer);
+        TrainerLog.trainerWorloadSaved(saved.getUsername());
     }
 
-    private Trainer getOrCreateTrainer(CalculateTrainerWorkloadRequest request) {
-        return trainers.computeIfAbsent(
-                request.getTrainerUsername(),
-                username -> {
-                    Trainer t = new Trainer();
-                    t.setUsername(username);
-                    t.setFirstName(request.getFirstName());
-                    t.setLastName(request.getLastName());
-                    t.setIsActive(request.getIsActive());
-                    t.setYears(new HashMap<>());
-                    return t;
-                }
-        );
+    private TrainerTrainingSummary getOrCreateTrainer(CalculateTrainerWorkloadRequest request) {
+
+        return repository.findByUsername(request.getTrainerUsername())
+                .orElseGet(() -> createNewTrainer(request));
     }
 
-    public Map<String, Trainer> getTrainers(){
-        return trainers;
+    private TrainerTrainingSummary createNewTrainer(CalculateTrainerWorkloadRequest request) {
+        TrainerTrainingSummary trainer = new TrainerTrainingSummary();
+
+        trainer.setUsername(request.getTrainerUsername());
+        trainer.setFirstName(request.getFirstName());
+        trainer.setLastName(request.getLastName());
+        trainer.setIsActive(request.getIsActive());
+        trainer.setYears(new HashMap<>());
+
+        return trainer;
     }
 }

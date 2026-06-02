@@ -2,29 +2,46 @@ package com.gym.system.workload;
 
 import static org.junit.jupiter.api.Assertions.*;
 import com.gym.system.shared.dto.CalculateTrainerWorkloadRequest;
+import com.gym.system.workload.model.TrainerTrainingSummary;
+import com.gym.system.workload.repository.TrainerTrainingSummaryRepository;
 import com.gym.system.workload.service.TrainerService;
 import com.gym.system.workload.service.strategy.AddWorkloadStrategy;
 import com.gym.system.workload.service.strategy.DeleteWorkloadStrategy;
 import com.gym.system.workload.service.strategy.WorkloadStrategyFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.mockito.Mockito.*;
+
+import java.util.HashMap;
+import java.util.Optional;
 
 import java.time.LocalDate;
-import java.util.Map;
 
+@ExtendWith(MockitoExtension.class)
 class GymSystemWorloadApplicationTests {
 
+	@InjectMocks
 	private TrainerService trainerService;
+
+	@Mock
+	private TrainerTrainingSummaryRepository repository;
 
     @BeforeEach
 	void setUp() {
+		repository = mock(TrainerTrainingSummaryRepository.class);
+
 		WorkloadStrategyFactory strategyFactory =
 				new WorkloadStrategyFactory(
 						new AddWorkloadStrategy(),
 						new DeleteWorkloadStrategy()
 				);
 
-		trainerService = new TrainerService(strategyFactory);
+		trainerService = new TrainerService(strategyFactory, repository);
 	}
 
 	@Test
@@ -39,21 +56,37 @@ class GymSystemWorloadApplicationTests {
 		request.setTrainingDate(LocalDate.of(2026, 1, 10));
 		request.setActionType("ADD");
 
+		when(repository.findByUsername("john"))
+				.thenReturn(Optional.empty());
+
 		trainerService.calculateWorkload(request);
 
 		// assert
-		assertTrue(trainerService.getTrainers().containsKey("john"));
-		assertEquals(60,
-				trainerService.getTrainers()
-						.get("john")
-						.getYears()
-						.get(2026)
-						.get(1));
+		verify(repository).save(
+				argThat(trainer ->
+						trainer.getYears()
+								.get(2026)
+								.get(1) == 60
+				)
+		);
 	}
 
 	@Test
 	void shouldAccumulateWorkload() {
 
+		TrainerTrainingSummary trainer =
+				new TrainerTrainingSummary();
+
+		trainer.setUsername("john");
+		trainer.setYears(new HashMap<>());
+
+		trainer.getYears()
+				.computeIfAbsent(2026, y -> new HashMap<>())
+				.put(1, 60);
+
+		when(repository.findByUsername("john"))
+				.thenReturn(Optional.of(trainer));
+
 		CalculateTrainerWorkloadRequest request = new CalculateTrainerWorkloadRequest();
 		request.setTrainerUsername("john");
 		request.setTrainingDuration(60);
@@ -61,37 +94,49 @@ class GymSystemWorloadApplicationTests {
 		request.setActionType("ADD");
 
 		trainerService.calculateWorkload(request);
-		trainerService.calculateWorkload(request);
 
-		int result = trainerService.getTrainers()
-				.get("john")
-				.getYears()
-				.get(2026)
-				.get(1);
+		assertEquals(
+				120,
+				trainer.getYears()
+						.get(2026)
+						.get(1)
+		);
 
-		assertEquals(120, result);
+		verify(repository).save(trainer);
 	}
 
 	@Test
 	void shouldDeleteWorkload() {
 
+		TrainerTrainingSummary trainer =
+				new TrainerTrainingSummary();
+
+		trainer.setUsername("john");
+		trainer.setYears(new HashMap<>());
+
+		trainer.getYears()
+				.computeIfAbsent(2026, y -> new HashMap<>())
+				.put(1, 60);
+
+		when(repository.findByUsername("john"))
+				.thenReturn(Optional.of(trainer));
+
+
 		CalculateTrainerWorkloadRequest request = new CalculateTrainerWorkloadRequest();
 		request.setTrainerUsername("john");
 		request.setTrainingDuration(60);
 		request.setTrainingDate(LocalDate.of(2026, 1, 10));
-		request.setActionType("ADD");
-
-		trainerService.calculateWorkload(request);
-
 		request.setActionType("DELETE");
+
 		trainerService.calculateWorkload(request);
 
-		Map<Integer, Integer> months = trainerService.getTrainers()
-				.get("john")
-				.getYears()
-				.get(2026);
+		assertFalse(
+				trainer.getYears()
+						.get(2026)
+						.containsKey(1)
+		);
 
-		assertFalse(months.containsKey(1));
+		verify(repository).save(trainer);
 	}
 
 }

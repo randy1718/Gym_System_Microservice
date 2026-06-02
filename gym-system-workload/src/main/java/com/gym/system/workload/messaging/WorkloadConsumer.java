@@ -20,9 +20,7 @@ public class WorkloadConsumer {
     @JmsListener(destination = "workload.queue")
     public void receiveWorkload(
             CalculateTrainerWorkloadRequest request) {
-        System.out.println("MESSAGE RECEIVED");
-        logger.info(
-                "MESSAGE RECEIVED!!!!!!!");
+        logger.info("MESSAGE RECEIVED!!!!!!!");
         trainerService.calculateWorkload(request);
     }
 }

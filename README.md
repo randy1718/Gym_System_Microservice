@@ -1,4 +1,4 @@
-# Gym System - Microservices Architecture with Asynchronous Messaging
+# Gym System - Microservices Architecture with Asynchronous Messaging and MongoDB
 
 A Gym CRM system built with Spring Boot using a microservices architecture.
 
@@ -8,7 +8,7 @@ This project manages trainees, trainers, and training sessions, and calculates t
 
 # Architecture Overview
 
-This system is composed of **four components**:
+This system is composed of **five components**:
 
 ## 1. Main Application (Core Business Logic)
 
@@ -31,16 +31,40 @@ Responsibilities:
 
 - Consumes workload messages from ActiveMQ
 - Calculates trainer workload
-- Stores workload data in-memory
+- Stores workload data in MongoDB
 - Processes asynchronous events
 
 Example port:
 
 - `http://localhost:8081`
 
+Database:
+
+- `gym_workload_db`
+
 ---
 
-## 3. Eureka Server (Service Discovery)
+## 3. MongoDB
+
+Responsibilities:
+
+- Persists trainer workload information
+- Stores aggregated workload records
+- Provides durable storage for workload calculations
+
+Default Port:
+
+- `27017`
+
+Database:
+
+```text
+gym_workload_db
+```
+
+---
+
+## 4. Eureka Server (Service Discovery)
 
 Responsibilities:
 
@@ -53,7 +77,7 @@ Runs on:
 
 ---
 
-## 4. ActiveMQ Broker (Message Broker)
+## 5. ActiveMQ Broker (Message Broker)
 
 Responsibilities:
 
@@ -88,7 +112,8 @@ Flow:
    - `workload.queue`
 3. ActiveMQ stores the message
 4. The Workload Microservice consumes the message
-5. Trainer workload is calculated asynchronously
+5. Trainer workload is calculated
+6. Workload data is persisted in MongoDB
 
 Benefits:
 
@@ -96,7 +121,37 @@ Benefits:
 - Better fault tolerance
 - Loose coupling between services
 - Faster API responses
+- Persistent workload storage
 - Retry capability through queues
+
+---
+
+# Data Persistence
+
+The Workload Microservice stores trainer workload information in MongoDB.
+
+Database:
+
+```text
+gym_workload_db
+```
+
+Example document structure:
+
+```json
+{
+  "username": "trainer1",
+  "firstName": "John",
+  "lastName": "Doe",
+  "active": true,
+  "years": {
+    "2026": {
+      "JANUARY": 12,
+      "FEBRUARY": 8
+    }
+  }
+}
+```
 
 ---
 
@@ -109,6 +164,8 @@ Benefits:
 - Spring JMS
 - Apache ActiveMQ
 - PostgreSQL
+- MongoDB
+- Spring Data MongoDB
 - Eureka Server
 - Maven
 - Docker
@@ -137,13 +194,21 @@ git --version
 
 # Docker Configuration
 
-The project uses Docker to run the ActiveMQ broker.
+The project uses Docker to run both ActiveMQ and MongoDB.
 
 ## Pull ActiveMQ Image
 
 ```bash
 docker pull rmohr/activemq
 ```
+
+## Pull MongoDB Image
+
+```bash
+docker pull mongo
+```
+
+---
 
 ## Run ActiveMQ Container
 
@@ -155,34 +220,75 @@ docker run -d \
   rmohr/activemq
 ```
 
+---
+
+## Run MongoDB Container
+
+```bash
+docker run -d \
+  --name mongodb \
+  -p 27017:27017 \
+  mongo
+```
+
+---
+
 ## Verify Running Containers
 
 ```bash
 docker ps
 ```
 
-Expected container:
+Expected containers:
 
 ```text
 activemq
+mongodb
 ```
 
-## Stop ActiveMQ Container
+---
+
+## Stop Containers
 
 ```bash
 docker stop activemq
+docker stop mongodb
 ```
 
-## Start Existing Container Again
+---
+
+## Start Existing Containers Again
 
 ```bash
 docker start activemq
+docker start mongodb
 ```
 
-## Remove Container
+---
+
+## Remove Containers
 
 ```bash
 docker rm -f activemq
+docker rm -f mongodb
+```
+
+---
+
+# MongoDB Configuration
+
+Example configuration for the Workload Microservice:
+
+```properties
+spring.data.mongodb.host=localhost
+spring.data.mongodb.port=27017
+spring.data.mongodb.database=gym_workload_db
+```
+
+Alternatively:
+
+```properties
+spring.data.mongodb.uri=mongodb://localhost:27017/gym_workload_db
 ```
 
 ---
@@ -214,13 +320,11 @@ You must run ALL components for the system to work correctly.
 
 # 1. Start ActiveMQ Broker
 
-If not already running:
-
 ```bash
 docker start activemq
 ```
 
-Or create the container for the first time:
+or create it:
 
 ```bash
 docker run -d \
@@ -232,7 +336,30 @@ docker run -d \
 
 ---
 
-# 2. Start Eureka Server
+# 2. Start MongoDB
+
+```bash
+docker start mongodb
+```
+
+or create it:
+
+```bash
+docker run -d \
+  --name mongodb \
+  -p 27017:27017 \
+  mongo
+```
+
+Verify:
+
+```bash
+docker ps
+```
+
+---
+
+# 3. Start Eureka Server
 
 ```bash
 cd eureka-server
@@ -247,7 +374,7 @@ http://localhost:8761
 
 ---
 
-# 3. Start Workload Microservice
+# 4. Start Workload Microservice
 
 ```bash
 cd workload-microservice
@@ -260,13 +387,13 @@ Example port:
 http://localhost:8081
 ```
 
-This microservice listens to:
+This microservice:
 
-```text
-workload.queue
-```
+- Listens to `workload.queue`
+- Processes workload events
+- Persists workload data into MongoDB (`gym_workload_db`)
 
-using:
+Listener example:
 
 ```java
 @JmsListener(destination = "workload.queue")
@@ -274,7 +401,7 @@ using:
 
 ---
 
-# 4. Start Main Application
+# 5. Start Main Application
 
 ```bash
 cd main-app
@@ -317,6 +444,28 @@ workload.queue
 
 ---
 
+# Verifying MongoDB Data
+
+Connect to the MongoDB container:
+
+```bash
+docker exec -it mongodb mongosh
+```
+
+Select the database:
+
+```javascript
+use gym_workload_db
+```
+
+View stored workload documents:
+
+```javascript
+db.trainerWorkloads.find().pretty()
+```
+
+---
+
 # Optional Improvements
 
 Possible future enhancements:
@@ -329,6 +478,8 @@ Possible future enhancements:
 - Kubernetes deployment
 - Centralized logging
 - Monitoring with Prometheus + Grafana
+- MongoDB replica sets
+- MongoDB indexing strategy
 
 ---
 
