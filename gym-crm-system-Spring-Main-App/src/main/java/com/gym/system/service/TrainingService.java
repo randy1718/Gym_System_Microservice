@@ -168,6 +168,14 @@ public class TrainingService {
         return trainingDAO.findById(id);
     }
 
+    public void delete(Long id){
+        logger.info("Service: Deleting training with id {}", id);
+        Training training = trainingDAO.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Training not found"));
+
+        trainingDAO.delete(training.getId());
+    }
+
     public List<Training> findTrainingsByTraineeUsername(String username, String password, String fromDate, String toDate, String trainerName, String trainingType){
         logger.info("Service: Fetching trainings for trainee {}", username);
 

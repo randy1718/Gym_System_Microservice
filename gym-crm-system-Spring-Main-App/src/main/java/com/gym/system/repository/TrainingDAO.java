@@ -53,6 +53,11 @@ public class TrainingDAO {
         return Optional.ofNullable(em.find(Training.class, id));
     }
 
+    public Optional<Training> findById(Long id) {
+        logger.debug("Finding training {}", id);
+        return Optional.ofNullable(em.find(Training.class, id));
+    }
+
     public List<Training> findTrainingsByTraineeUsername(String username, String fromDate, String toDate,
             String trainerName, String trainingType) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

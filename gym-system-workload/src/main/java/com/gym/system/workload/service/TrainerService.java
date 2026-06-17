@@ -15,14 +15,22 @@ public class TrainerService {
     private final WorkloadStrategyFactory strategyFactory;
     private final TrainerTrainingSummaryRepository repository;
 
-    public TrainerService(WorkloadStrategyFactory strategyFactory,  TrainerTrainingSummaryRepository repository) {
+    public TrainerService(WorkloadStrategyFactory strategyFactory, TrainerTrainingSummaryRepository repository) {
         this.strategyFactory = strategyFactory;
         this.repository = repository;
     }
 
     public void calculateWorkload(CalculateTrainerWorkloadRequest request) {
-        TrainerTrainingSummary trainer = getOrCreateTrainer(request);
         WorkloadStrategy strategy = strategyFactory.getStrategy(request.getActionType());
+        TrainerTrainingSummary trainer;
+        if ("ADD".equals(request.getActionType())) {
+            trainer = getOrCreateTrainer(request);
+        } else {
+            trainer = repository.findByUsername(request.getTrainerUsername()).orElse(null);
+            if (trainer == null) {
+                return;
+            }
+        }
         strategy.execute(trainer, request);
         TrainerTrainingSummary saved = repository.save(trainer);
         TrainerLog.trainerWorloadSaved(saved.getUsername());
@@ -30,8 +38,7 @@ public class TrainerService {
 
     private TrainerTrainingSummary getOrCreateTrainer(CalculateTrainerWorkloadRequest request) {
 
-        return repository.findByUsername(request.getTrainerUsername())
-                .orElseGet(() -> createNewTrainer(request));
+        return repository.findByUsername(request.getTrainerUsername()).orElseGet(() -> createNewTrainer(request));
     }
 
     private TrainerTrainingSummary createNewTrainer(CalculateTrainerWorkloadRequest request) {

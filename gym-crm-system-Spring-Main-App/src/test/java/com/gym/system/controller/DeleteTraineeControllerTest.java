@@ -1,4 +1,4 @@
-package com.gym.system.Controller;
+package com.gym.system.controller;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -14,7 +14,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gym.system.controller.TraineeController;
 import com.gym.system.dto.DeleteTraineeRequest;
 import com.gym.system.service.GymServices;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;

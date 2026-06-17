@@ -1,4 +1,4 @@
-package com.gym.system.Controller;
+package com.gym.system.controller;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.gym.system.controller.TrainerController;
 import com.gym.system.dto.TrainerTraineesList;
 import com.gym.system.dto.UpdateTrainerRequest;
 import com.gym.system.dto.UpdateTrainerResponse;

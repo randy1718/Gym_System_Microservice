@@ -1,4 +1,4 @@
-# Gym System - Microservices Architecture with Asynchronous Messaging and MongoDB
+# Gym System - Microservices Architecture with Cucumber Tests
 
 A Gym CRM system built with Spring Boot using a microservices architecture.
 

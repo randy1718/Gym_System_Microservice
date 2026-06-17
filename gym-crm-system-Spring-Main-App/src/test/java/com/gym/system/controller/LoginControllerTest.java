@@ -1,4 +1,4 @@
-package com.gym.system.Controller;
+package com.gym.system.controller;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -13,7 +13,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gym.system.controller.LoginController;
 import com.gym.system.dto.LoginRequest;
 
 import com.gym.system.service.GymServices;

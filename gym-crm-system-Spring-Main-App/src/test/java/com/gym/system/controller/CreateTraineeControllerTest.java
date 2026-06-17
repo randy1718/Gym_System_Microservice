@@ -1,4 +1,4 @@
-package com.gym.system.Controller;
+package com.gym.system.controller;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -6,9 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gym.system.controller.TrainerController;
-import com.gym.system.dto.TrainerRegistrationRequest;
-import com.gym.system.dto.TrainerRegistrationResponse;
+import com.gym.system.dto.TraineeRegistrationRequest;
+import com.gym.system.dto.TraineeRegistrationResponse;
 import com.gym.system.exception.GlobalExceptionHandler;
 import com.gym.system.service.GymServices;
 
@@ -20,7 +19,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-class CreateTrainerControllerTest {
+class CreateTraineeControllerTest {
 
     private MockMvc mockMvc;
     private GymServices facade;
@@ -29,8 +28,9 @@ class CreateTrainerControllerTest {
     @BeforeEach
     void setup() {
         facade = Mockito.mock(GymServices.class);
-        TrainerController controller =
-                new TrainerController(facade);
+
+        TraineeController controller =
+                new TraineeController(facade);
 
         LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
         validator.afterPropertiesSet();
@@ -47,38 +47,37 @@ class CreateTrainerControllerTest {
     @Test
     void shouldReturn200_WhenValidRequest() throws Exception {
         // Arrange
-        TrainerRegistrationRequest request = new TrainerRegistrationRequest();
-        request.setFirstName("Mario");
-        request.setLastName("Hernandez");
-        request.setSpecializationName("Cardio");
+        TraineeRegistrationRequest request = new TraineeRegistrationRequest();
+        request.setFirstName("Lucas");
+        request.setLastName("Diaz");
 
-        TrainerRegistrationResponse response = new TrainerRegistrationResponse();
-        response.setUsername("Mario.Hernandez");
-        response.setPassword("1234567qasdAS");
+        TraineeRegistrationResponse response = new TraineeRegistrationResponse();
+        response.setUsername("Lucas.Diaz");
+        response.setPassword("Abc1234567");
 
-        when(facade.createTrainer(Mockito.any()))
+        when(facade.createTrainee(Mockito.any()))
                 .thenReturn(response);
 
         // Act + Assert
         mockMvc.perform(
-                post("/trainers")
+                post("/trainees")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request))
         )
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$.username").value("Mario.Hernandez"))
-        .andExpect(jsonPath("$.password").value("1234567qasdAS"));
+        .andExpect(jsonPath("$.username").value("Lucas.Diaz"))
+        .andExpect(jsonPath("$.password").value("Abc1234567"));
     }
 
     @Test
     void shouldReturn400_WhenFirstNameIsMissing() throws Exception {
+        // Arrange
+        TraineeRegistrationRequest request = new TraineeRegistrationRequest();
+        request.setLastName("Diaz"); // firstName missing
 
-        TrainerRegistrationRequest request = new TrainerRegistrationRequest();
-        request.setLastName("Hernandez");
-        request.setSpecializationName("Cardio");
-
+        // Act + Assert
         mockMvc.perform(
-                        post("/trainers")
+                        post("/trainees")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(request))
                 )
@@ -86,36 +85,31 @@ class CreateTrainerControllerTest {
     }
 
     @Test
-    void shouldReturn400_WhenSpecializationIsMissing() throws Exception {
-
-        TrainerRegistrationRequest request = new TrainerRegistrationRequest();
-        request.setFirstName("Mario");
-        request.setLastName("Hernandez");
-
+    void shouldReturn400_WhenRequestBodyIsEmpty() throws Exception {
         mockMvc.perform(
-                        post("/trainers")
+                        post("/trainees")
                                 .contentType(MediaType.APPLICATION_JSON)
-                                .content(objectMapper.writeValueAsString(request))
+                                .content("{}")
                 )
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void shouldReturn400_WhenSpecializationDoesNotExist() throws Exception {
+    void shouldReturn500_WhenUnexpectedErrorOccurs() throws Exception {
+        // Arrange
+        TraineeRegistrationRequest request = new TraineeRegistrationRequest();
+        request.setFirstName("Lucas");
+        request.setLastName("Diaz");
 
-        TrainerRegistrationRequest request = new TrainerRegistrationRequest();
-        request.setFirstName("Mario");
-        request.setLastName("Hernandez");
-        request.setSpecializationName("UnknownType");
+        when(facade.createTrainee(Mockito.any()))
+                .thenThrow(new RuntimeException("DB down"));
 
-        when(facade.createTrainer(Mockito.any()))
-                .thenThrow(new IllegalArgumentException("Invalid specialization"));
-
+        // Act + Assert
         mockMvc.perform(
-                        post("/trainers")
+                        post("/trainees")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(objectMapper.writeValueAsString(request))
                 )
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isInternalServerError());
     }
 }

@@ -144,6 +144,14 @@ public class TraineeService {
         }
     }
 
+    public void delete(String username){
+        logger.info("Service: Deleting trainee with username {}", username);
+        Trainee trainee = traineeDAO.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        traineeDAO.delete(trainee.getUsername());
+    }
+
     public boolean toggleTraineeStatus(String username, String password) {
 
         Boolean isAuthenticated = authenticate(username, password);
@@ -165,6 +173,11 @@ public class TraineeService {
         }else{
             throw new IllegalArgumentException("Invalid credentials");
         }
+    }
+
+    public Optional<Trainee> findByUsername(String username){
+        logger.info("Service: Finding trainee with username {}", username);
+            return traineeDAO.findByUsername(username);
     }
 
     public Boolean deleteTraineeProfile(DeleteTraineeRequest request){

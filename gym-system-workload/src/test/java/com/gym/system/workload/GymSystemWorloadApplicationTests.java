@@ -35,6 +35,9 @@ class GymSystemWorloadApplicationTests {
 	void setUp() {
 		repository = mock(TrainerTrainingSummaryRepository.class);
 
+		when(repository.save(any(TrainerTrainingSummary.class)))
+				.thenAnswer(invocation -> invocation.getArgument(0));
+
 		WorkloadStrategyFactory strategyFactory =
 				new WorkloadStrategyFactory(
 						new AddWorkloadStrategy(),

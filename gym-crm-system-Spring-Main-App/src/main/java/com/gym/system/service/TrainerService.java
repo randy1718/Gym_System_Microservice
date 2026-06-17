@@ -3,6 +3,7 @@ package com.gym.system.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.gym.system.model.Trainee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -187,6 +188,19 @@ public class TrainerService {
         }else{
             throw new IllegalArgumentException("Invalid credentials");
         }  
+    }
+
+    public Optional<Trainer> findByUsername(String username){
+        logger.info("Service: Finding trainer with username {}", username);
+            return trainerDAO.findByUsername(username);
+    }
+
+    public void delete(String username){
+        logger.info("Service: Deleting trainee with username {}", username);
+        Trainer trainer = trainerDAO.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        trainerDAO.delete(trainer.getId());
     }
 
     public boolean activateDeactivateTrainer(ActivateDeactivateTrainerRequest request){
