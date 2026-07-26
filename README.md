@@ -1,4 +1,4 @@
-# Gym System - Microservices Architecture with Cucumber Tests
+# Gym System - With Dockerfiles and Docker compose
 
 A Gym CRM system built with Spring Boot using a microservices architecture.
 
