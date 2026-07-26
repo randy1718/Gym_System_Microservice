@@ -1,0 +1,293 @@
+docker logs -f gym-main
+2026-07-26 20:25:39 INFO  com.gym.system.App
+                [transactionId=] - Initializing GYM System...
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v4.0.1)
+
+2026-07-26 20:25:43 INFO  com.gym.system.App
+                [transactionId=] - Starting App v1.0-SNAPSHOT using Java 21.0.11 with PID 1 (/app/app.jar started by root in /app)
+2026-07-26 20:25:43 INFO  com.gym.system.App
+                [transactionId=] - The following 1 profile is active: "docker"
+2026-07-26 20:25:49 INFO  o.h.validator.internal.util.Version
+                [transactionId=] - HV000001: Hibernate Validator 9.0.1.Final
+2026-07-26 20:25:57 INFO  o.s.d.r.c.RepositoryConfigurationDelegate
+                [transactionId=] - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-07-26 20:25:57 INFO  o.s.d.r.c.RepositoryConfigurationDelegate
+                [transactionId=] - Finished Spring Data repository scanning in 364 ms. Found 0 JPA repository interfaces.
+2026-07-26 20:26:03 INFO  o.s.cloud.context.scope.GenericScope
+                [transactionId=] - BeanFactory id=29b2de85-9cef-307a-aedb-c682a7f45ddf
+2026-07-26 20:26:14 INFO  o.s.boot.tomcat.TomcatWebServer
+                [transactionId=] - Tomcat initialized with port 8080 (http)
+2026-07-26 20:26:14 INFO  o.a.coyote.http11.Http11NioProtocol
+                [transactionId=] - Initializing ProtocolHandler ["http-nio-8080"]
+2026-07-26 20:26:14 INFO  o.a.catalina.core.StandardService
+                [transactionId=] - Starting service [Tomcat]
+2026-07-26 20:26:14 INFO  o.a.catalina.core.StandardEngine
+                [transactionId=] - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-07-26 20:26:15 INFO  o.s.b.w.c.s.WebApplicationContextInitializer
+                [transactionId=] - Root WebApplicationContext: initialization completed in 30569 ms
+2026-07-26 20:26:18 INFO  org.hibernate.orm.jpa
+                [transactionId=] - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-07-26 20:26:19 INFO  org.hibernate.orm.core
+                [transactionId=] - HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-07-26 20:26:20 INFO  o.s.o.j.p.SpringPersistenceUnitInfo
+                [transactionId=] - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-07-26 20:26:21 INFO  com.zaxxer.hikari.HikariDataSource
+                [transactionId=] - HikariPool-1 - Starting...
+2026-07-26 20:26:22 INFO  com.zaxxer.hikari.pool.HikariPool
+                [transactionId=] - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@5ab1107d
+2026-07-26 20:26:22 INFO  com.zaxxer.hikari.HikariDataSource
+                [transactionId=] - HikariPool-1 - Start completed.
+2026-07-26 20:26:22 INFO  o.hibernate.orm.connections.pooling
+                [transactionId=] - HHH10001005: Database info:
+        Database JDBC URL [jdbc:postgresql://postgres:5432/gym_system_docker]
+        Database driver: PostgreSQL JDBC Driver
+        Database dialect: PostgreSQLDialect
+        Database version: 16.14
+        Default catalog/schema: gym_system_docker/public
+        Autocommit mode: undefined/unknown
+        Isolation level: READ_COMMITTED [default READ_COMMITTED]
+        JDBC fetch size: none
+        Pool: DataSourceConnectionProvider
+        Minimum pool size: undefined/unknown
+        Maximum pool size: undefined/unknown
+2026-07-26 20:26:27 INFO  org.hibernate.orm.core
+                [transactionId=] - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-07-26 20:26:27 INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean
+                [transactionId=] - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-07-26 20:26:27 INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer
+                [transactionId=] - Global AuthenticationManager configured with UserDetailsService bean with name customUserDetailsService
+2026-07-26 20:26:29 INFO  c.g.s.r.i.DatabaseInitializer
+                [transactionId=] - Loading JSON storage file from: data.json
+2026-07-26 20:26:29 INFO  c.g.s.r.i.DatabaseInitializer
+                [transactionId=] - JSON storage file loaded successfully.
+2026-07-26 20:26:32 WARN  o.s.b.j.a.JpaBaseConfiguration$JpaWebConfiguration
+                [transactionId=] - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-07-26 20:26:36 INFO  o.s.c.n.e.c.DiscoveryClientOptionalArgsConfiguration
+                [transactionId=] - Eureka HTTP Client uses RestClient.
+2026-07-26 20:26:37 WARN  o.s.c.l.c.LoadBalancerCacheAutoConfiguration$LoadBalancerCaffeineWarnLogger
+                [transactionId=] - Spring Cloud LoadBalancer is currently working with the default cache. While this cache implementation is useful for development and tests, it's recommended to use Caffeine cache in production.You can switch to using Caffeine cache, by adding it and org.springframework.cache.caffeine.CaffeineCacheManager to the classpath.
+2026-07-26 20:26:37 INFO  o.s.b.a.e.web.EndpointLinksResolver
+                [transactionId=] - Exposing 4 endpoints beneath base path '/actuator'
+2026-07-26 20:26:37 INFO  o.s.c.n.eureka.InstanceInfoFactory
+                [transactionId=] - Setting initial instance status as: STARTING
+2026-07-26 20:26:37 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - Initializing Eureka in region us-east-1
+2026-07-26 20:26:37 INFO  c.n.d.s.r.aws.ConfigClusterResolver
+                [transactionId=] - Resolving eureka endpoints via configuration
+2026-07-26 20:26:37 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - Disable delta property : false
+2026-07-26 20:26:37 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - Single vip registry refresh property : null
+2026-07-26 20:26:37 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - Force full registry fetch : false
+2026-07-26 20:26:37 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - Application is null : false
+2026-07-26 20:26:37 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - Registered Applications size is zero : true
+2026-07-26 20:26:37 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - Application version is -1: true
+2026-07-26 20:26:37 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - Getting all instance registry info from the eureka server
+2026-07-26 20:26:38 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - The response status is 200
+2026-07-26 20:26:38 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - Starting heartbeat executor: renew interval is: 30
+2026-07-26 20:26:38 INFO  c.n.discovery.InstanceInfoReplicator
+                [transactionId=] - InstanceInfoReplicator onDemand update allowed rate per min is 4
+2026-07-26 20:26:38 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - Discovery Client initialized at timestamp 1785097598244 with initial instances count: 1
+2026-07-26 20:26:38 INFO  o.s.c.n.e.s.EurekaServiceRegistry
+                [transactionId=] - Registering application GYM-CRM-SYSTEM with eureka with status UP
+2026-07-26 20:26:38 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - Saw local status change event StatusChangeEvent [timestamp=1785097598267, current=UP, previous=STARTING]
+2026-07-26 20:26:38 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - DiscoveryClient_GYM-CRM-SYSTEM/96c761ba04f5:gym-crm-system:8080: registering service...
+2026-07-26 20:26:38 INFO  o.a.coyote.http11.Http11NioProtocol
+                [transactionId=] - Starting ProtocolHandler ["http-nio-8080"]
+2026-07-26 20:26:38 INFO  o.s.boot.tomcat.TomcatWebServer
+                [transactionId=] - Tomcat started on port 8080 (http) with context path '/'
+2026-07-26 20:26:38 INFO  o.s.c.n.e.s.EurekaAutoServiceRegistration
+                [transactionId=] - Updating port to 8080
+2026-07-26 20:26:38 INFO  com.gym.system.App
+                [transactionId=] - Started App in 57.835 seconds (process running for 67.483)
+2026-07-26 20:26:38 INFO  c.netflix.discovery.DiscoveryClient
+                [transactionId=] - DiscoveryClient_GYM-CRM-SYSTEM/96c761ba04f5:gym-crm-system:8080 - registration status: 204
+2026-07-26 20:31:30 INFO  c.n.d.s.r.aws.ConfigClusterResolver
+                [transactionId=] - Resolving eureka endpoints via configuration
+2026-07-26 20:36:23 INFO  c.n.d.s.r.aws.ConfigClusterResolver
+                [transactionId=] - Resolving eureka endpoints via configuration
+2026-07-26 20:41:15 INFO  c.n.d.s.r.aws.ConfigClusterResolver
+                [transactionId=] - Resolving eureka endpoints via configuration
+2026-07-26 20:46:11 INFO  c.n.d.s.r.aws.ConfigClusterResolver
+                [transactionId=] - Resolving eureka endpoints via configuration
+2026-07-26 20:51:08 INFO  c.n.d.s.r.aws.ConfigClusterResolver
+                [transactionId=] - Resolving eureka endpoints via configuration
+2026-07-26 20:56:04 INFO  c.n.d.s.r.aws.ConfigClusterResolver
+                [transactionId=] - Resolving eureka endpoints via configuration
+2026-07-26 21:01:01 INFO  c.n.d.s.r.aws.ConfigClusterResolver
+                [transactionId=] - Resolving eureka endpoints via configuration
+2026-07-26 21:02:08 INFO  o.a.c.c.C.[Tomcat].[localhost].[/]
+                [transactionId=] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-07-26 21:02:08 INFO  o.s.web.servlet.DispatcherServlet
+                [transactionId=] - Initializing Servlet 'dispatcherServlet'
+2026-07-26 21:02:08 INFO  o.s.web.servlet.DispatcherServlet
+                [transactionId=] - Completed initialization in 7 ms
+2026-07-26 21:02:08 INFO  c.g.s.filter.TransactionIdFilter
+                [transactionId=da606071-37ad-496e-82eb-16b4a55d4244] - -----Transaction started-----
+2026-07-26 21:02:08 INFO  c.g.s.i.RestLoggingInterceptor
+                [transactionId=da606071-37ad-496e-82eb-16b4a55d4244] - Incoming request: method=POST url=/auth/login headers=Content-Type=application/json, User-Agent=PostmanRuntime/7.54.0, Accept=*/*, Postman-Token=f82c7fef-95d6-46da-ac49-d0acbddce0e0, Host=localhost:8080, Accept-Encoding=gzip, deflate, br, Connection=keep-alive, Content-Length=61 query=null
+2026-07-26 21:02:08 INFO  c.gym.system.repository.TraineeDAO
+                [transactionId=da606071-37ad-496e-82eb-16b4a55d4244] - Finding trainee Alex.Perez
+2026-07-26 21:02:08 INFO  c.gym.system.repository.TraineeDAO
+                [transactionId=da606071-37ad-496e-82eb-16b4a55d4244] - Finding trainee Alex.Perez
+2026-07-26 21:02:09 INFO  c.g.s.i.RestLoggingInterceptor
+                [transactionId=da606071-37ad-496e-82eb-16b4a55d4244] - Request completed: method=POST url=/auth/login status=200 executionTime=403
+2026-07-26 21:02:09 INFO  c.g.s.filter.TransactionIdFilter
+                [transactionId=da606071-37ad-496e-82eb-16b4a55d4244] - -----Transaction completed-----
+2026-07-26 21:02:47 INFO  c.g.s.filter.TransactionIdFilter
+                [transactionId=ea0a8f1b-ecab-451f-beb3-b6ed331bfa6b] - -----Transaction started-----
+2026-07-26 21:02:47 INFO  c.g.s.i.RestLoggingInterceptor
+                [transactionId=ea0a8f1b-ecab-451f-beb3-b6ed331bfa6b] - Incoming request: method=GET url=/trainers headers=Content-Type=application/json, User-Agent=PostmanRuntime/7.54.0, Accept=*/*, Postman-Token=253b4144-f49e-44d9-b217-f9881f8f9052, Host=localhost:8080, Accept-Encoding=gzip, deflate, br, Connection=keep-alive, Content-Length=60 query=null
+2026-07-26 21:02:47 INFO  c.gym.system.service.TrainerService
+                [transactionId=ea0a8f1b-ecab-451f-beb3-b6ed331bfa6b] - Service: Getting profile for trainer Ana.Lopez
+2026-07-26 21:02:47 INFO  c.g.s.i.RestLoggingInterceptor
+                [transactionId=ea0a8f1b-ecab-451f-beb3-b6ed331bfa6b] - Request completed: method=GET url=/trainers status=400 executionTime=192
+2026-07-26 21:02:47 INFO  c.g.s.filter.TransactionIdFilter
+                [transactionId=ea0a8f1b-ecab-451f-beb3-b6ed331bfa6b] - -----Transaction completed-----
+2026-07-26 21:03:09 INFO  c.g.s.filter.TransactionIdFilter
+                [transactionId=67ca23be-9d88-4c47-9bf9-218cdb3f608b] - -----Transaction started-----
+2026-07-26 21:03:09 INFO  c.g.s.i.RestLoggingInterceptor
+                [transactionId=67ca23be-9d88-4c47-9bf9-218cdb3f608b] - Incoming request: method=GET url=/trainers headers=Content-Type=application/json, User-Agent=PostmanRuntime/7.54.0, Accept=*/*, Postman-Token=3dc601eb-a54c-47c3-ac4f-0d4a6d8158b0, Host=localhost:8080, Accept-Encoding=gzip, deflate, br, Connection=keep-alive, Content-Length=60 query=null
+2026-07-26 21:03:09 INFO  c.gym.system.service.TrainerService
+                [transactionId=67ca23be-9d88-4c47-9bf9-218cdb3f608b] - Service: Getting profile for trainer Ana.Lopez
+2026-07-26 21:03:09 INFO  c.g.s.i.RestLoggingInterceptor
+                [transactionId=67ca23be-9d88-4c47-9bf9-218cdb3f608b] - Request completed: method=GET url=/trainers status=200 executionTime=126
+2026-07-26 21:03:09 INFO  c.g.s.filter.TransactionIdFilter
+                [transactionId=67ca23be-9d88-4c47-9bf9-218cdb3f608b] - -----Transaction completed-----
+2026-07-26 21:05:59 INFO  c.n.d.s.r.aws.ConfigClusterResolver
+                [transactionId=] - Resolving eureka endpoints via configuration
+2026-07-26 21:08:43 ERROR o.a.c.c.C.[.[.[.[dispatcherServlet]
+                [transactionId=] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception
+io.jsonwebtoken.ExpiredJwtException: JWT expired at 2026-07-26T21:07:08Z. Current time: 2026-07-26T21:08:43Z, a difference of 95453 milliseconds.  Allowed clock skew: 0 milliseconds.
+        at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:427)
+        at io.jsonwebtoken.impl.DefaultJwtParser.parse(DefaultJwtParser.java:529)
+        at io.jsonwebtoken.impl.DefaultJwtParser.parseClaimsJws(DefaultJwtParser.java:589)
+        at io.jsonwebtoken.impl.ImmutableJwtParser.parseClaimsJws(ImmutableJwtParser.java:173)
+        at com.gym.system.security.jwt.JwtUtil.extractClaims(JwtUtil.java:35)
+        at com.gym.system.security.jwt.JwtUtil.extractUsername(JwtUtil.java:40)
+        at com.gym.system.security.jwt.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:35)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+        at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+        at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+        at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+        at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+        at org.springframework.web.filter.CorsFilter.doFilterInternal(CorsFilter.java:91)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+        at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+        at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+        at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+        at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+        at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+        at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+        at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+        at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+        at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+        at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+        at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:337)
+        at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+        at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+        at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+        at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+        at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+        at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+        at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+        at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+        at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+        at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+        at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+        at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+        at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+        at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+        at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+        at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+        at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+        at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+        at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+        at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+        at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+        at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+        at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+        at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+        at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+        at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+        at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+        at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+        at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+        at java.base/java.lang.Thread.run(Unknown Source)
+2026-07-26 21:08:50 INFO  c.g.s.filter.TransactionIdFilter
+                [transactionId=358baaed-bc48-4e75-a7df-4357215dec17] - -----Transaction started-----
+2026-07-26 21:08:50 INFO  c.g.s.i.RestLoggingInterceptor
+                [transactionId=358baaed-bc48-4e75-a7df-4357215dec17] - Incoming request: method=POST url=/auth/login headers=Content-Type=application/json, User-Agent=PostmanRuntime/7.54.0, Accept=*/*, Postman-Token=dd034b6f-a34d-4b32-8e36-22a29e28731e, Host=localhost:8080, Accept-Encoding=gzip, deflate, br, Connection=keep-alive, Content-Length=61, Cookie=JSESSIONID=0638BE5E0B90A08FB07EEDF6F739833C query=null
+2026-07-26 21:08:50 INFO  c.gym.system.repository.TraineeDAO
+                [transactionId=358baaed-bc48-4e75-a7df-4357215dec17] - Finding trainee Alex.Perez
+2026-07-26 21:08:50 INFO  c.gym.system.repository.TraineeDAO
+                [transactionId=358baaed-bc48-4e75-a7df-4357215dec17] - Finding trainee Alex.Perez
+2026-07-26 21:08:50 INFO  c.g.s.i.RestLoggingInterceptor
+                [transactionId=358baaed-bc48-4e75-a7df-4357215dec17] - Request completed: method=POST url=/auth/login status=200 executionTime=114
+2026-07-26 21:08:50 INFO  c.g.s.filter.TransactionIdFilter
+                [transactionId=358baaed-bc48-4e75-a7df-4357215dec17] - -----Transaction completed-----
+2026-07-26 21:09:03 INFO  c.g.s.filter.TransactionIdFilter
+                [transactionId=e920f5af-4547-477f-a402-c2d4fc373a4e] - -----Transaction started-----
+2026-07-26 21:09:03 INFO  c.g.s.i.RestLoggingInterceptor
+                [transactionId=e920f5af-4547-477f-a402-c2d4fc373a4e] - Incoming request: method=POST url=/trainings headers=Content-Type=application/json, User-Agent=PostmanRuntime/7.54.0, Accept=*/*, Postman-Token=6a7b76f4-616e-4f6d-a502-6d78036c8d50, Host=localhost:8080, Accept-Encoding=gzip, deflate, br, Connection=keep-alive, Content-Length=187, Cookie=JSESSIONID=0638BE5E0B90A08FB07EEDF6F739833C query=null
+2026-07-26 21:09:03 INFO  c.gym.system.service.TrainingService
+                [transactionId=e920f5af-4547-477f-a402-c2d4fc373a4e] - Service: Adding training for trainee Alex.Perez with trainer Ana.Lopez
+2026-07-26 21:09:03 INFO  c.gym.system.repository.TraineeDAO
+                [transactionId=e920f5af-4547-477f-a402-c2d4fc373a4e] - Finding trainee Alex.Perez
+2026-07-26 21:09:04 INFO  c.g.s.i.RestLoggingInterceptor
+                [transactionId=e920f5af-4547-477f-a402-c2d4fc373a4e] - Request completed: method=POST url=/trainings status=200 executionTime=907
+2026-07-26 21:09:04 INFO  c.g.s.filter.TransactionIdFilter
+                [transactionId=e920f5af-4547-477f-a402-c2d4fc373a4e] - -----Transaction completed-----
+2026-07-26 21:10:57 INFO  c.n.d.s.r.aws.ConfigClusterResolver
+                [transactionId=] - Resolving eureka endpoints via configuration
+2026-07-26 21:15:55 INFO  c.n.d.s.r.aws.ConfigClusterResolver
+                [transactionId=] - Resolving eureka endpoints via configuration
+
+C:\Users\ASUS\OneDrive\Documents\Epam_Java_Specialization\Microservices>docker logs -d -f gym-main
+
+What's next:
+    View and search logs for all containers in one place
+    with Docker Desktop's Logs view. docker-desktop://dashboard/logs
+unknown shorthand flag: 'd' in -d
+
+Usage:  docker logs [OPTIONS] CONTAINER
+
+Run 'docker logs --help' for more information
