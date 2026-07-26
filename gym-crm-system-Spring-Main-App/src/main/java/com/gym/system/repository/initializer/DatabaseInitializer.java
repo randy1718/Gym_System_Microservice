@@ -16,7 +16,7 @@ import com.gym.system.service.DatabaseInitService;
 
 @Component
 @PropertySource("classpath:application.properties")
-@Profile({"dev", "local"})
+@Profile({"dev", "local", "docker"})
 public class DatabaseInitializer {
     @Value("${storage.data.path}")
     private String storageDataPath;

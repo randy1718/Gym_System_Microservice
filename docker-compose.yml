@@ -1,32 +1,73 @@
-services:
-
-  eureka:
-    build:
-      context: ./gym-system-eureka
-    container_name: eureka
-    ports:
-      - "8761:8761"
-
-
-  main-app:
-    build:
-      context: ./gym-crm-system-Spring-Main-App
-    container_name: gym-main
-    ports:
-      - "8080:8080"
-    depends_on:
-      - eureka
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
-
-
-  workload-service:
-    build:
-      context: ./gym-system-workload
-    container_name: gym-workload
-    ports:
-      - "8081:8081"
-    depends_on:
-      - eureka
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
+  services:
+  
+    eureka:
+      build:
+        context: ./gym-system-eureka
+      container_name: eureka
+      ports:
+        - "8761:8761"
+      networks:
+        - gym-network
+  
+    postgres:
+      image: postgres:16
+      container_name: postgres
+      environment:
+        POSTGRES_DB: gym_system_docker
+        POSTGRES_USER: postgres
+        POSTGRES_PASSWORD: Randymiller123
+      ports:
+        - "5432:5432"
+      networks:
+        - gym-network
+  
+    mongo:
+      image: mongo:latest
+      container_name: mongo
+      ports:
+        - "27017:27017"
+      networks:
+        - gym-network
+  
+    activemq:
+      image: rmohr/activemq
+      container_name: activemq
+      ports:
+        - "8161:8161"
+        - "61618:61616"
+      networks:
+        - gym-network
+  
+    main-app:
+      build:
+        context: ./gym-crm-system-Spring-Main-App
+      container_name: gym-main
+      ports:
+        - "8080:8080"
+      depends_on:
+        - eureka
+        - postgres
+        - activemq
+      environment:
+        SPRING_PROFILES_ACTIVE: docker
+      networks:
+        - gym-network
+  
+    workload-service:
+      build:
+        context: ./gym-system-workload
+      container_name: gym-workload
+      ports:
+        - "8081:8081"
+      depends_on:
+        - eureka
+        - mongo
+        - activemq
+      environment:
+        SPRING_PROFILES_ACTIVE: docker
+      networks:
+        - gym-network
+  
+  networks:
+    gym-network:
+      driver: bridge
